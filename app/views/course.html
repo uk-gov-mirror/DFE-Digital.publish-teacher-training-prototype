@@ -27,9 +27,9 @@
     {{ title }}
   </h1>
 
-  <p>
+  <!-- <p>
     <a href="/preview/{{ subject.slug }}">Preview course</a>
-  </p>
+  </p> -->
 
   <div class="grid-row">
     <div class="column-two-thirds">
@@ -39,7 +39,7 @@
               <h3 class="course-part-task">
                 Details from UCAS
               </h3>
-              <!-- <a class="course-part-task-action" href="/course/{{ subject.slug }}/from-ucas">View</a> -->
+              <!-- <a href="/course/{{ subject.slug }}/from-ucas">View</a> -->
 
               <div style="clear: left; padding-top: 20px" class="add-top-margin">
                 <p>Course information that we’ve received from UCAS based on your submissions to them. If you want to change these you’ll need to use UCAS web-link.</p>
@@ -62,14 +62,15 @@
                         <td>{{ course.name }}</td>
                         <td>{{ course.options }}</td>
                         <td>{{ course.programmeCode }}</td>
-                        <td><a href="/course/{{ subject.slug }}/from-ucas#{{ course.programmeCode }}">View</a></td>
+                        <td class="view-cell"><a href="/course/{{ subject.slug }}/from-ucas#{{ course.programmeCode }}">View</a></td>
                       </tr>
                     {% endif %}
                   {% endfor %}
                 </tbody>
               </table>
 
-              <!-- <dl class="course-part-tasks">
+              <!-- <p>You’ll need to complete the following:</p>
+              <ul class="list list-bullet">
                 <div>
                   <dt class="course-part-label">
                     UCAS {{ subject.name }} courses
@@ -127,70 +128,81 @@
               </dl> -->
             </li>
             <li class="course-parts-item">
-              <h3 class="course-part-task">
-                About this course
-              </h3>
-              <a class="course-part-task-action" href="/course/{{ subject.slug }}/about-this-course">Edit</a>
-              <dl class="course-part-tasks">
+              <div class="course-part-header">
+                <h3 class="course-part-task">
+                  <a href="/course/{{ subject.slug }}/about-this-course">About this course</a>
+                </h3>
+              </div>
+              <p>You’ll need to complete the following:</p>
+              <ul class="list list-bullet">
                 {{ macros.coursePart(subject.slug + '-course-website', 'Course webpage') }}
                 {{ macros.coursePart(subject.slug + '-about-this-course', 'About this course') }}
-              </dl>
+              </ul>
             </li>
             <li class="course-parts-item">
-              <h3 class="course-part-task">
-                About your organisation
-              </h3>
-              <a class="course-part-task-action" href="/course/{{ subject.slug }}/about-this-provider">Edit</a>
-              <dl class="course-part-tasks">
+              <div class="course-part-header">
+                <h3 class="course-part-task">
+                  <a href="/course/{{ subject.slug }}/about-this-provider">About your organisation</a>
+                </h3>
+              </div>
+              <p>You’ll need to complete the following:</p>
+              <ul class="list list-bullet">
                 {{ macros.coursePart(subject.slug + '-about-organisation', 'About your organisation') }}
                 {{ macros.coursePart(subject.slug + '-training-with-a-disability', 'Training with a disability') }}
                 {{ macros.coursePart(subject.slug + '-interview-process', 'Interview process') }}
-                {{ macros.coursePart(subject.slug + '-placement-school-policy', 'How school placements work') }}
-              </dl>
+                {{ macros.coursePart(subject.slug + '-placement-school-policy', 'Schools you’ll be placed at') }}
+              </ul>
             </li>
             <li class="course-parts-item">
-              <h3 class="course-part-task">
-                Course requirements
-              </h3>
-              <a class="course-part-task-action" href="/course/{{ subject.slug }}/requirements">Edit</a>
+              <div class="course-part-header">
+                <h3 class="course-part-task">
+                  <a href="/course/{{ subject.slug }}/requirements">Course requirements</a>
+                </h3>
+              </div>
 
-              <dl class="course-part-tasks">
+              <p>You’ll need to complete the following:</p>
+              <ul class="list list-bullet">
                 {{ macros.coursePart(subject.slug + '-qualifications-required', 'Qualifications needed') }}
                 {{ macros.coursePart(subject.slug + '-personal-qualities', 'Personal qualities') }}
                 {{ macros.coursePart(subject.slug + '-other-requirements', 'Other requirements') }}
-              </dl>
+              </ul>
             </li>
             {% if subject.folded_course.flags.qualifications %}
             <li class="course-parts-item">
-              <h3 class="course-part-task">
-                Qualification
-              </h3>
-              <a class="course-part-task-action" href="/course/{{ subject.slug }}/qualification-options">Edit</a>
-              <dl class="course-part-tasks">
+              <div class="course-part-header">
+                <h3 class="course-part-task">
+                  <a href="/course/{{ subject.slug }}/qualification-options">Qualification</a>
+                </h3>
+              </div>
+              <ul class="list list-bullet">
                 {{ macros.coursePart(subject.slug + '-pgce-with-qts-qual', 'PGCE with QTS') }}
                 {{ macros.coursePart(subject.slug + '-pgce-with-qts-qual-fee', 'PGCE with QTS course fee') }}
                 {{ macros.coursePart(subject.slug + '-qts-qual', 'QTS') }}
                 {{ macros.coursePart(subject.slug + '-qts-qual-fee', 'QTS course fee') }}
-              </dl>
+              </ul>
             </li>
             {% endif %}
             {% if subject.folded_course.flags.salary %}
             <li class="course-parts-item">
-              <h3 class="course-part-task">
-                Salary
-              </h3>
-              <a class="course-part-task-action" href="/course/{{ subject.slug }}/salary-options">Edit</a>
-              <dl class="course-part-tasks">
-                {{ macros.coursePart(subject.slug + '-salaried', 'Earn a salary while you train') }}
-              </dl>
+              <div class="course-part-header">
+                <h3 class="course-part-task">
+                  <a href="/course/{{ subject.slug }}/salary-options">Salary</a>
+                </h3>
+              </div>
+              <p>You’ll need to complete the following:</p>
+              <ul class="list list-bullet">
+                {{ macros.coursePart(subject.slug + '-salaried', 'About a salaried course') }}
+                {{ macros.coursePart(subject.slug + '-salary', 'Salary available') }}
+              </ul>
             </li>
             {% endif %}
             <!-- <li class="course-parts-item">
               <h3 class="course-part-task">
                 Schools
               </h3>
-              <a class="course-part-task-action" href="/course/{{ subject.slug }}/requirements">Edit</a>
-              <dl class="course-part-tasks">
+              <a href="/course/{{ subject.slug }}/requirements">View fields</a>
+              <p>You’ll need to complete the following:</p>
+              <ul class="list list-bullet">
                 <div>
                   <dt class="course-part-label">
                     Placement school policy
@@ -203,10 +215,10 @@
             </li> -->
           </ul>
       </div>
-      <form action="/course/{{ subject.slug }}" method="post">
+      <!-- <form action="/course/{{ subject.slug }}" method="post">
         <input type="hidden" name="{{ subject.slug }}-qa" value="true" />
         <input type="submit" value="Send to DfE" class="button" />
-      </form>
+      </form> -->
     </div>
   </div>
 </main>

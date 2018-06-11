@@ -48,6 +48,11 @@ $course-parts-indent: 35px;
   padding-top: 3px;
 }
 
+.course-part-header {
+  overflow: hidden;
+  margin-bottom: $gutter;
+}
+
 .course-part-tasks {
   margin-top: 60px;
 
@@ -83,8 +88,6 @@ $course-parts-indent: 35px;
   .course-part-label {
     float: none;
     display: block;
-    font-weight: bold;
-    padding-bottom: 5px;
 
     // @include media(desktop) {
     //   width: 30%;
@@ -99,7 +102,6 @@ $course-parts-indent: 35px;
     float: none;
     display: block;
     padding: 0;
-    margin-bottom: 10px;
 
     &--empty {
       color: $grey-1;

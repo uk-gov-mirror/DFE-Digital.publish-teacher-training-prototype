@@ -219,7 +219,30 @@ dl.aligned dd {
   border-bottom: 0;
 }
 
+.ucas-info-table .view-cell {
+  text-align: right;
+}
+
 .missing-section {
   border: 5px solid $border-colour;
   padding: $gutter / 2;
+}
+
+[disabled] {
+  text-indent: 5px;
+  background-color: #eee;
+  background-image: repeating-linear-gradient(45deg, transparent, transparent 70px, rgba(255,255,255,1) 70px, rgba(255,255,255,1) 140px) !important;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: $black;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: $black;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: $black;
+}
+:-moz-placeholder { /* Firefox 18- */
+  color: $black;
 }
