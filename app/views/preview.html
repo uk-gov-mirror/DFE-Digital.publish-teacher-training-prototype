@@ -50,8 +50,17 @@
           <li><a href="#section-apply">Apply</a></li>
         </ul>
 
-        <h2 class="heading-medium" id="section-about">About the course</h2>
-        {{ macros.previewPart(subject.slug + '-about-this-course') }}
+        {% for option in subject.folded_course.options %}
+          <h2 class="heading-medium" id="section">{{ option }}</h2>
+
+          <h3 class="heading-small" id="section-about">About the course</h3>
+          {{ macros.previewPart(subject.slug + '-about-this-course') }}
+
+          <h3 class="heading-small">Schools you’ll be placed at</h3>
+          {{ macros.previewPart(subject.slug + '-placement-school-policy') }}
+        {% endfor %}
+
+
 
         <h2 class="heading-medium" id="section-entry">Requirements</h2>
 
@@ -154,9 +163,6 @@
 
         <h3 class="heading-small">Interview process</h3>
         {{ macros.previewPart(subject.slug + '-interview-process') }}
-
-        <h3 class="heading-small">Schools you’ll be placed at</h3>
-        {{ macros.previewPart(subject.slug + '-placement-school-policy') }}
 
         <h2 class="heading-medium" id="section-contact">Contact details</h2>
 
