@@ -220,8 +220,14 @@ dl.aligned dd {
   border-bottom: 0;
 }
 
-.ucas-info-table .ucas-view-link {
-  text-align: right;
+.ucas-info-table  {
+  .subject-col {
+    width: 30%;
+  }
+
+  .ucas-view-link {
+    text-align: right;
+  }
 }
 
 .missing-section {
