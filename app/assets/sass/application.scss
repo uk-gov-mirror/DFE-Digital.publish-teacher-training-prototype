@@ -216,6 +216,11 @@ dl.aligned dd {
   padding: 60px;
 }
 
+.ucas-info-table td {
+  border-top: 1px solid $border-colour;
+  border-bottom: none;
+}
+
 .ucas-info-table tr:last-child td {
   border-bottom: 0;
 }
@@ -223,6 +228,14 @@ dl.aligned dd {
 .ucas-info-table  {
   .subject-col {
     width: 30%;
+  }
+
+  .code-col {
+    width: 20%;
+  }
+
+  .type {
+    width: 40%;
   }
 
   .ucas-view-link {
