@@ -43,6 +43,7 @@ prototype_data['ucasCourses'] = courses.map do |c|
     subjects: c['subjects'].map {|s| s.downcase.capitalize }.join(', '),
     ageRange: c['ageRange'].capitalize,
     name: c['name'],
+    slug: c['name'].downcase.gsub(' ', '-'),
     route: c['route'],
     qualifications: c['qualifications'].join(', '),
     providerCode: c['providerCode'],
@@ -51,6 +52,8 @@ prototype_data['ucasCourses'] = courses.map do |c|
     options: options
   }
 end
+
+prototype_data['ucasCourses'].sort_by! { |k| k[:name] }
 
 # Find all schools across all courses and flatten into array of schools
 prototype_data['schools'] = courses.map { |c| c['campuses'].map { |a| { name: a['name'], address: a['address'], code: a['code'] } } }.flatten.uniq

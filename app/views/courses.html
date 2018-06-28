@@ -48,13 +48,39 @@
         {{ accrediting.name }}
       </h3>
     {% endif %}
-    <ul class="list listing-example">
+
+    <table class="ucas-info-table">
+      <thead>
+        <tr>
+          <th class="subject-col">Subject</th>
+          <th class="code-col">UCAS code</th>
+          <th class="type-col">Type</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for course in data['ucasCourses'] %}
+          {% if course.accrediting == accrediting.name %}
+            <tr>
+              <td>{{ course.name }}</td>
+              <td>{{ course.programmeCode }}</td>
+              <td>{{ course.options }}</td>
+              <td class="ucas-view-link"><a href="/course/{{ accrediting.slug }}/{{ course.slug }}/ucas/{{ course.programmeCode }}">Check data</a></td>
+            </tr>
+          {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <!-- <ul class="list listing-example">
       {% for result in accrediting.subjects %}
         <li>
           <a href="/course/{{ accrediting.slug}}/{{ result.slug }}">{{ result.name }}</a>
+
+
         </li>
       {% endfor %}
-    </ul>
+    </ul> -->
   {% endfor %}
 </main>
 
