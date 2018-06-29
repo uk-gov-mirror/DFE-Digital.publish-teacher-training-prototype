@@ -7,6 +7,18 @@
   {% include "includes/phase_banner_beta.html" %}
   <div class="breadcrumbs"></div>
 
+  {% if showMessage %}
+  <div class="success-summary" role="alert" aria-labelledby="success-summary-heading-example-1" tabindex="-1" style="margin-bottom: 60px">
+    <h3 class="heading-medium success-summary-heading" id="success-summary-heading-example-1">
+      DfE has received your request to give access to {{ data['request-first-name']}} {{ data['request-last-name'] }}.
+    </h3>
+    <p>
+      They will receive sign-up instructions if their account is approved.
+    </p>
+    <p><a href="/request-access">Request access for someone else</a></p>
+  </div>
+  {% endif %}
+
   <div class="grid-row add-double-bottom-margin">
     <div class="column-two-thirds">
       <h1 class="heading-xlarge">
