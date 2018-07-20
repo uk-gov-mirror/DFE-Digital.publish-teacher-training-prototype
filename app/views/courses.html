@@ -67,6 +67,7 @@
           <th class="subject-col">Subject</th>
           <th class="code-col">UCAS code</th>
           <th class="type-col">Type</th>
+          <th class="status-col">Status</th>
           <th></th>
         </tr>
       </thead>
@@ -78,7 +79,8 @@
               <td>{{ course.name }}</td>
               <td>{{ course.programmeCode }}</td>
               <td>{{ course.options }}</td>
-              <td class="ucas-view-link"><a href="/course/{{ accrediting.slug }}/{{ course.slug }}/ucas/{{ course.programmeCode }}">View course</a></td>
+              <td>Running</td>
+              <td class="ucas-view-link"><a href="/course/{{ accrediting.slug }}/{{ course.slug }}/ucas/{{ course.programmeCode }}">View&nbsp;course</a></td>
             </tr>
             {% set subjectName = course.name %}
           {% endif %}
