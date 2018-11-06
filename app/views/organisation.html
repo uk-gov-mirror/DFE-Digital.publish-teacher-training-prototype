@@ -89,7 +89,7 @@
                 <td>{{ course.options }}</td>
                 <td>
                   {% if (loop.index == 5) %}
-                    <a href="/course/{{ accrediting.slug }}/{{ course.programmeCode }}?attention=yes" style="font-weight: bold; color: #b10e1e;">Needs&nbsp;attention<br />in UCAS</a>
+                    Needs&nbsp;attention<br />from UCAS
                   {% elseif (loop.index != 4 and loop.index != 7) %}
                     Running
                   {% else %}
