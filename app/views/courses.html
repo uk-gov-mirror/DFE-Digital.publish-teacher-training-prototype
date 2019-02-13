@@ -44,13 +44,7 @@
   {% endif %}
 
   {% if data['ucasCourses'].length > 0 %}
-    {% for accrediting in data['accreditors'] %}
-      {% if data['accreditors'][0]['name'] != data['training-provider-name'] %}
-        <h3 class="govuk-heading-m">
-          <span class="govuk-caption-m">Accredited body</span>
-          {{ accrediting.name }}
-        </h3>
-      {% endif %}
+
       <div class="body-text">
         <table class="govuk-table ucas-info-table">
           <thead class="govuk-table__head">
@@ -65,7 +59,7 @@
           <tbody class="govuk-table__body">
             {% set subjectName = '' %}
             {% for course in data['ucasCourses'] %}
-              {% if course.accrediting == accrediting.name %}
+
                 <tr class="govuk-table__row">
                   <td class="govuk-table__cell">
                     <a href="/course/{{ data['provider-code'] }}/{{ course.programmeCode }}" class="govuk-heading-s govuk-!-margin-0">{{ course.name }} ({{ course.programmeCode }})</a>
@@ -102,8 +96,8 @@
                   </td>
                 </tr>
                 {% set subjectName = course.name %}
-              {% endif %}
-            {% endfor %}
+
+            
           </tbody>
         </table>
       </div>
