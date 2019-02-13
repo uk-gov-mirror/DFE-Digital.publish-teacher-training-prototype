@@ -209,6 +209,16 @@ prototype_data['ucasCourses'].sort_by! { |k| k[:name] }
 prototype_data['schools'] = courses.map { |c| c['campuses'].map { |a| { name: a['name'], address: a['address'], code: a['code'] } } }.flatten.uniq
 prototype_data['schools'].sort_by! { |k| k[:name] }
 
+prototype_data['schools'] = [
+  {
+   "name": "Main Site",
+   "address": "",
+   "code": "-",
+   "urn": 100000,
+   "postcode": ""
+ }
+]
+
 prototype_data['schools'].each do |school|
   school[:urn] = 100000
   postcodeMatched = postcodeRegex.match(school[:address])
@@ -276,11 +286,14 @@ courses.each do |course|
 end
 
 prototype_data['new-course'] = {
-  'include-accredited': courses.first['route'].include?('School Direct'),
+  'include-accredited': false,
   'include-fee-or-salary': courses.first['route'].include?('School Direct'),
   'include-locations': prototype_data['schools'].length > 1
 }
 
+prototype_data['training-provider-name'] = ['Your organisation']
+prototype_data['ucasCourses'] = []
+prototype_data['accreditors'] = []
 prototype_data['accreditors'].each {|a| a[:subjects].sort_by! { |k| k[:name] }.uniq! }
 
 # Output to prototype
