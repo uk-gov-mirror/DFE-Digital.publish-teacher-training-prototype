@@ -229,9 +229,6 @@ end
 
 prototype_data['courses'].sort_by! { |k| k[:name] }
 
-# Temporarily empty
-# prototype_data['courses'] = []
-
 # Find all schools across all courses and flatten into array of schools
 prototype_data['schools'] = courses.map { |c| c['campuses'].map { |a| { name: a['name'], address: a['address'], code: a['code'] == '' ? '-' : a['code'] } } }.flatten.uniq
 prototype_data['schools'].sort_by! { |k| k[:name] }
@@ -258,49 +255,12 @@ prototype_data['accreditors'] = courses.uniq {|c| c['accrediting'] }.map  do |c|
   end
 
   {
-    name: accrediting,
-    slug: accrediting.downcase.gsub(/[^a-zA-Z0-9]/, '-').gsub(/--*/, '-').gsub(/-$/,''),
-    subjects: []
+    name: accrediting
   }
 end
 
 prototype_data['accreditors'].sort_by! { |k| k[:name] }
 prototype_data['self_accrediting'] = (prototype_data['accreditors'].length == 1 && prototype_data['accreditors'][0][:name] == provider)
-
-# Create a list of subjects
-prototype_data['subjects'] = courses.uniq {|c| c['name'] }.map  do |c|
-  {
-    name: c['name'],
-    slug: c['name'].downcase.gsub(/[^a-zA-Z0-9]/, '-').gsub(/--*/, '-').gsub(/-$/,''),
-  }
-end
-
-prototype_data['subjects'].sort_by! { |k| k[:name] }
-
-# Group courses by accrediting provider
-courses_by_accrediting = {}
-prototype_data['accreditors'].each { |c| courses_by_accrediting[c[:name]] = [] }
-courses.each do |c|
-  courses_by_accrediting[c['accrediting'] || provider] << c
-end
-
-# Group courses by subject
-courses_by_subject = {}
-prototype_data['subjects'].each { |c| courses_by_subject[c[:name]] = [] }
-courses.each { |c| courses_by_subject[c['name']] << c }
-
-courses_by_accreditor_and_subject = {}
-prototype_data['accreditors'].each do |accrediting|
-  courses_by_accreditor_and_subject[accrediting[:name]] = {}
-  prototype_data['subjects'].each { |subject| courses_by_accreditor_and_subject[accrediting[:name]][subject[:name]] = [] }
-end
-
-courses.each do |course|
-  courses_by_accreditor_and_subject[course['accrediting'] || provider][course['name']] << course
-
-  subject = prototype_data['subjects'].find {|s| s[:name] == course['name']}
-  prototype_data['accreditors'].find { |a| a[:name] == (course['accrediting'] || provider)}[:subjects] << subject
-end
 
 prototype_data['new-course'] = {
   'include-accredited': courses.first['route'].include?('School Direct'),
@@ -308,7 +268,6 @@ prototype_data['new-course'] = {
   'include-locations': prototype_data['schools'].length > 1
 }
 
-prototype_data['accreditors'].each {|a| a[:subjects].sort_by! { |k| k[:name] }.uniq! }
 prototype_data['accredited-bodies-choices'] = all_accredited_bodies.map { |k| { name: k } }
 
 # Output to prototype

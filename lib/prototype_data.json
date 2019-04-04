@@ -1018,133 +1018,13 @@
   "--address": "Windmill Lane, Batley, WF17 0LD",
   "accreditors": [
     {
-      "name": "Leeds Beckett University",
-      "slug": "leeds-beckett-university",
-      "subjects": [
-        {
-          "name": "Art and Design",
-          "slug": "art-and-design"
-        },
-        {
-          "name": "Computing",
-          "slug": "computing"
-        },
-        {
-          "name": "Geography",
-          "slug": "geography"
-        },
-        {
-          "name": "Mathematics",
-          "slug": "mathematics"
-        },
-        {
-          "name": "Music",
-          "slug": "music"
-        },
-        {
-          "name": "Physical Education",
-          "slug": "physical-education"
-        },
-        {
-          "name": "Primary",
-          "slug": "primary"
-        }
-      ]
+      "name": "Leeds Beckett University"
     },
     {
-      "name": "Leeds Trinity University",
-      "slug": "leeds-trinity-university",
-      "subjects": [
-        {
-          "name": "Biology",
-          "slug": "biology"
-        },
-        {
-          "name": "Chemistry",
-          "slug": "chemistry"
-        },
-        {
-          "name": "English",
-          "slug": "english"
-        },
-        {
-          "name": "History",
-          "slug": "history"
-        },
-        {
-          "name": "Modern Languages (French)",
-          "slug": "modern-languages-french"
-        },
-        {
-          "name": "Physics",
-          "slug": "physics"
-        },
-        {
-          "name": "Religious Education",
-          "slug": "religious-education"
-        }
-      ]
+      "name": "Leeds Trinity University"
     }
   ],
   "self_accrediting": false,
-  "subjects": [
-    {
-      "name": "Art and Design",
-      "slug": "art-and-design"
-    },
-    {
-      "name": "Biology",
-      "slug": "biology"
-    },
-    {
-      "name": "Chemistry",
-      "slug": "chemistry"
-    },
-    {
-      "name": "Computing",
-      "slug": "computing"
-    },
-    {
-      "name": "English",
-      "slug": "english"
-    },
-    {
-      "name": "Geography",
-      "slug": "geography"
-    },
-    {
-      "name": "History",
-      "slug": "history"
-    },
-    {
-      "name": "Mathematics",
-      "slug": "mathematics"
-    },
-    {
-      "name": "Modern Languages (French)",
-      "slug": "modern-languages-french"
-    },
-    {
-      "name": "Music",
-      "slug": "music"
-    },
-    {
-      "name": "Physical Education",
-      "slug": "physical-education"
-    },
-    {
-      "name": "Physics",
-      "slug": "physics"
-    },
-    {
-      "name": "Primary",
-      "slug": "primary"
-    },
-    {
-      "name": "Religious Education",
-      "slug": "religious-education"
-    }
-  ],
   "new-course": {
     "include-accredited": true,
     "include-fee-or-salary": true,
