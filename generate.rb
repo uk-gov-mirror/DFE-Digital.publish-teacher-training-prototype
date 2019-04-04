@@ -248,14 +248,8 @@ end
 
 # Create a list of accreditors
 data['accreditors'] = courses.uniq {|c| c['accrediting'] }.map  do |c|
-  accrediting = c['accrediting']
-
-  if accrediting.nil?
-    accrediting = provider
-  end
-
   {
-    name: accrediting
+    name: c['accrediting'].nil? ? provider : c['accrediting']
   }
 end
 
