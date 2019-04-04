@@ -14,7 +14,7 @@ all_accredited_bodies = data.map {|c| c['accrediting'] }.uniq.compact.sort
 # https://stackoverflow.com/questions/164979/uk-postcode-regex-comprehensive
 postcodeRegex =  /([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\s?[0-9][A-Za-z]{2})/
 
-prototype_data = {
+data = {
   'rolled-over': false,
   'next-cycle': next_cycle,
   'multi-organisation': false,
@@ -46,49 +46,49 @@ def course_qualification(c)
 end
 
 # Map course data for the `imported from UCAS` view
-prototype_data['courses'] = courses.each_with_index.map do |c, idx|
+data['courses'] = courses.each_with_index.map do |c, idx|
   options = []
   courseCode = c['programmeCode']
   lorem = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
   if idx < 7
-    prototype_data[courseCode + '-about-this-course'] = lorem
-    prototype_data[courseCode + '-interview-process'] = lorem
-    prototype_data[courseCode + '-placement-school-policy'] = lorem
-    prototype_data[courseCode + '-duration'] = '1 year'
-    prototype_data[courseCode + '-salary-details'] = lorem
-    prototype_data[courseCode + '-fee'] = '9,000'
-    prototype_data[courseCode + '-fee-international'] = '14,000'
-    prototype_data[courseCode + '-fee-details'] = lorem
-    prototype_data[courseCode + '-financial-support'] = lorem
-    prototype_data[courseCode + '-qualifications-required'] = lorem
-    prototype_data[courseCode + '-personal-qualities'] = lorem
-    prototype_data[courseCode + '-other-requirements'] = lorem
+    data[courseCode + '-about-this-course'] = lorem
+    data[courseCode + '-interview-process'] = lorem
+    data[courseCode + '-placement-school-policy'] = lorem
+    data[courseCode + '-duration'] = '1 year'
+    data[courseCode + '-salary-details'] = lorem
+    data[courseCode + '-fee'] = '9,000'
+    data[courseCode + '-fee-international'] = '14,000'
+    data[courseCode + '-fee-details'] = lorem
+    data[courseCode + '-financial-support'] = lorem
+    data[courseCode + '-qualifications-required'] = lorem
+    data[courseCode + '-personal-qualities'] = lorem
+    data[courseCode + '-other-requirements'] = lorem
   end
 
   if next_cycle
-    prototype_data[courseCode + '-publish-state'] = 'rolled-over'
+    data[courseCode + '-publish-state'] = 'rolled-over'
   else
     if idx == 0 || idx == 4 || idx == 5
-      prototype_data[courseCode + '-publish-state'] = 'published'
-      prototype_data[courseCode + '-published-before'] = true
+      data[courseCode + '-publish-state'] = 'published'
+      data[courseCode + '-published-before'] = true
     end
 
     if idx == 1 || idx == 2
-      prototype_data[courseCode + '-publish-state'] = 'draft'
-      prototype_data[courseCode + '-published-before'] = false
+      data[courseCode + '-publish-state'] = 'draft'
+      data[courseCode + '-published-before'] = false
     end
 
     if idx == 3
-      prototype_data[courseCode + '-fee'] = '10,000'
-      prototype_data[courseCode + '-publish-state'] = 'published-with-changes'
-      prototype_data[courseCode + '-published-before'] = true
+      data[courseCode + '-fee'] = '10,000'
+      data[courseCode + '-publish-state'] = 'published-with-changes'
+      data[courseCode + '-published-before'] = true
     end
 
     if idx == 3
-      prototype_data[courseCode + '-publish-state'] = 'withdrawn'
-      prototype_data[courseCode + '-published-before'] = true
-      prototype_data[courseCode + '-withdraw-reason'] = 'It was published by mistake'
+      data[courseCode + '-publish-state'] = 'withdrawn'
+      data[courseCode + '-published-before'] = true
+      data[courseCode + '-withdraw-reason'] = 'It was published by mistake'
     end
   end
 
@@ -161,7 +161,7 @@ prototype_data['courses'] = courses.each_with_index.map do |c, idx|
   elsif !(subjectsWithoutLevel & languageSubjects).empty?
     subject = 'Modern languages'
     languages = subjectsWithoutLevel - rejectedLanguageSubjects
-    prototype_data[courseCode + '-languages'] = languages
+    data[courseCode + '-languages'] = languages
   else
     subject = subjects[0]
   end
@@ -173,37 +173,37 @@ prototype_data['courses'] = courses.each_with_index.map do |c, idx|
   ]
 
   if level == 'Further education'
-    prototype_data[courseCode + '-outcome'] = 'PGCE only (without QTS)'
+    data[courseCode + '-outcome'] = 'PGCE only (without QTS)'
   else
-    prototype_data[courseCode + '-outcome'] = qual
+    data[courseCode + '-outcome'] = qual
   end
 
-  prototype_data[courseCode + '-no-qualifications-yet'] = 'Yes (recommended)'
-  prototype_data[courseCode + '-equivalency-test'] = 'Yes (recommended)'
-  prototype_data[courseCode + '-equivalency-subjects'] = level == 'Primary' ? ['English', 'Mathematics', 'Science'] : ['English', 'Mathematics']
-  prototype_data[courseCode + '-generated-title'] = c['name']
-  prototype_data[courseCode + '-change-title'] = 'Yes, that’s correct'
-  #prototype_data[courseCode + '-title'] = c['name']
-  prototype_data[courseCode + '-applications-open'] = '10 October 2018'
-  prototype_data[courseCode + '-who-apply-type'] = "Option A"
-  prototype_data[courseCode + '-type'] = type
-  prototype_data[courseCode + '-languages'] = languages
-  prototype_data[courseCode + '-phase'] = level
-  prototype_data[courseCode + '-min-requirements'] = minRequirements
-  prototype_data[courseCode + '-subject'] = subject
-  prototype_data[courseCode + '-full-part'] = fullPart
-  prototype_data[courseCode + '-locations'] = schools.map { |s| s[:name] }
-  prototype_data[courseCode + '-sen'] = 'This is a SEND course' if sen
-  prototype_data[courseCode + '-has-accredited-body'] = c['accrediting'] ? 'Another organisation' : 'We are the accredited body'
-  prototype_data[courseCode + '-accredited-body'] = c['accrediting'] || provider
-  prototype_data[courseCode + '-vacancies-flag'] = idx == 4 ? 'No' : 'Yes'
-  prototype_data[courseCode + '-vacancies-choice'] = idx == 4 ? 'There are no vacancies' : 'There are some vacancies'
-  prototype_data[courseCode + '-full-time-and-part-time'] = partTime && fullTime
-  prototype_data[courseCode + '-multi-location'] = c['campuses'].length > 1
-  prototype_data[courseCode + '-start-date'] = 'September 2019'
+  data[courseCode + '-no-qualifications-yet'] = 'Yes (recommended)'
+  data[courseCode + '-equivalency-test'] = 'Yes (recommended)'
+  data[courseCode + '-equivalency-subjects'] = level == 'Primary' ? ['English', 'Mathematics', 'Science'] : ['English', 'Mathematics']
+  data[courseCode + '-generated-title'] = c['name']
+  data[courseCode + '-change-title'] = 'Yes, that’s correct'
+  #data[courseCode + '-title'] = c['name']
+  data[courseCode + '-applications-open'] = '10 October 2018'
+  data[courseCode + '-who-apply-type'] = "Option A"
+  data[courseCode + '-type'] = type
+  data[courseCode + '-languages'] = languages
+  data[courseCode + '-phase'] = level
+  data[courseCode + '-min-requirements'] = minRequirements
+  data[courseCode + '-subject'] = subject
+  data[courseCode + '-full-part'] = fullPart
+  data[courseCode + '-locations'] = schools.map { |s| s[:name] }
+  data[courseCode + '-sen'] = 'This is a SEND course' if sen
+  data[courseCode + '-has-accredited-body'] = c['accrediting'] ? 'Another organisation' : 'We are the accredited body'
+  data[courseCode + '-accredited-body'] = c['accrediting'] || provider
+  data[courseCode + '-vacancies-flag'] = idx == 4 ? 'No' : 'Yes'
+  data[courseCode + '-vacancies-choice'] = idx == 4 ? 'There are no vacancies' : 'There are some vacancies'
+  data[courseCode + '-full-time-and-part-time'] = partTime && fullTime
+  data[courseCode + '-multi-location'] = c['campuses'].length > 1
+  data[courseCode + '-start-date'] = 'September 2019'
 
   c['campuses'].each_with_index do |campus, i|
-    prototype_data["#{courseCode}-vacancies-#{i + 1}"] = 'Vacancies'
+    data["#{courseCode}-vacancies-#{i + 1}"] = 'Vacancies'
   end
 
   {
@@ -227,27 +227,27 @@ prototype_data['courses'] = courses.each_with_index.map do |c, idx|
   }
 end
 
-prototype_data['courses'].sort_by! { |k| k[:name] }
+data['courses'].sort_by! { |k| k[:name] }
 
 # Find all schools across all courses and flatten into array of schools
-prototype_data['schools'] = courses.map { |c| c['campuses'].map { |a| { name: a['name'], address: a['address'], code: a['code'] == '' ? '-' : a['code'] } } }.flatten.uniq
-prototype_data['schools'].sort_by! { |k| k[:name] }
+data['schools'] = courses.map { |c| c['campuses'].map { |a| { name: a['name'], address: a['address'], code: a['code'] == '' ? '-' : a['code'] } } }.flatten.uniq
+data['schools'].sort_by! { |k| k[:name] }
 
-prototype_data['schools'].each do |school|
+data['schools'].each do |school|
   school[:urn] = 100000
   postcodeMatched = postcodeRegex.match(school[:address])
 
   school[:postcode] = postcodeMatched ? postcodeMatched[0] : ''
-  prototype_data["#{school[:code]}-location-picked"] = "#{school[:name]} (#{school[:urn]}, City, #{school[:postcode]})"
-  prototype_data["#{school[:code]}-location-type"] = "A school or university"
-  prototype_data["#{school[:code]}-name"] = school[:name]
-  prototype_data["#{school[:code]}-urn"] = school[:urn]
-  prototype_data["#{school[:code]}-postcode"] = school[:postcode]
-  prototype_data["#{school[:code]}-address"] = school[:address]
+  data["#{school[:code]}-location-picked"] = "#{school[:name]} (#{school[:urn]}, City, #{school[:postcode]})"
+  data["#{school[:code]}-location-type"] = "A school or university"
+  data["#{school[:code]}-name"] = school[:name]
+  data["#{school[:code]}-urn"] = school[:urn]
+  data["#{school[:code]}-postcode"] = school[:postcode]
+  data["#{school[:code]}-address"] = school[:address]
 end
 
 # Create a list of accreditors
-prototype_data['accreditors'] = courses.uniq {|c| c['accrediting'] }.map  do |c|
+data['accreditors'] = courses.uniq {|c| c['accrediting'] }.map  do |c|
   accrediting = c['accrediting']
 
   if accrediting.nil?
@@ -259,16 +259,16 @@ prototype_data['accreditors'] = courses.uniq {|c| c['accrediting'] }.map  do |c|
   }
 end
 
-prototype_data['accreditors'].sort_by! { |k| k[:name] }
-prototype_data['self_accrediting'] = (prototype_data['accreditors'].length == 1 && prototype_data['accreditors'][0][:name] == provider)
+data['accreditors'].sort_by! { |k| k[:name] }
+data['self_accrediting'] = (data['accreditors'].length == 1 && data['accreditors'][0][:name] == provider)
 
-prototype_data['new-course'] = {
+data['new-course'] = {
   'include-accredited': courses.first['route'].include?('School Direct'),
   'include-fee-or-salary': courses.first['route'].include?('School Direct'),
-  'include-locations': prototype_data['schools'].length > 1
+  'include-locations': data['schools'].length > 1
 }
 
-prototype_data['accredited-bodies-choices'] = all_accredited_bodies.map { |k| { name: k } }
+data['accredited-bodies-choices'] = all_accredited_bodies.map { |k| { name: k } }
 
 # Output to prototype
-File.open('lib/prototype_data.json', 'w') { |file| file.write(JSON.pretty_generate(prototype_data) + "\n") }
+File.open('lib/prototype_data.json', 'w') { |file| file.write(JSON.pretty_generate(data) + "\n") }
