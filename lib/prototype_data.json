@@ -547,7 +547,7 @@
   "28LG-multi-location": false,
   "28LG-start-date": "September 2019",
   "28LG-vacancies-1": "Vacancies",
-  "ucasCourses": [
+  "courses": [
     {
       "level": "Secondary",
       "sen": false,

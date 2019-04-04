@@ -46,7 +46,7 @@ def course_qualification(c)
 end
 
 # Map course data for the `imported from UCAS` view
-prototype_data['ucasCourses'] = courses.each_with_index.map do |c, idx|
+prototype_data['courses'] = courses.each_with_index.map do |c, idx|
   options = []
   courseCode = c['programmeCode']
   lorem = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
@@ -227,10 +227,10 @@ prototype_data['ucasCourses'] = courses.each_with_index.map do |c, idx|
   }
 end
 
-prototype_data['ucasCourses'].sort_by! { |k| k[:name] }
+prototype_data['courses'].sort_by! { |k| k[:name] }
 
 # Temporarily empty
-# prototype_data['ucasCourses'] = []
+# prototype_data['courses'] = []
 
 # Find all schools across all courses and flatten into array of schools
 prototype_data['schools'] = courses.map { |c| c['campuses'].map { |a| { name: a['name'], address: a['address'], code: a['code'] == '' ? '-' : a['code'] } } }.flatten.uniq

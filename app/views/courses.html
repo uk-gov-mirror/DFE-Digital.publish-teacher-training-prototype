@@ -35,14 +35,14 @@
     </div>
   </div>
 
-  {% if data['ucasCourses'].length > 10 %}
+  {% if data['courses'].length > 10 %}
     <div class="add-top-margin">
       <a href="{{ newCourseFormUrl }}" class="govuk-button" target="_blank">Add a new course</a>
       <p class="govuk-body-s govuk-!-margin-bottom-6" style="margin-top: -20px">You’ll be taken to a Google Form to fill in your course details.</p>
     </div>
   {% endif %}
 
-  {% if data['ucasCourses'].length > 0 %}
+  {% if data['courses'].length > 0 %}
     {% for accrediting in data['accreditors'] %}
       {% if data['accreditors'][0]['name'] != data['training-provider-name'] %}
         <h3 class="govuk-heading-m">
@@ -62,7 +62,7 @@
             </tr>
           </thead>
           <tbody class="govuk-table__body">
-            {% for course in data['ucasCourses'] %}
+            {% for course in data['courses'] %}
               {% if course.accrediting == accrediting.name %}
                 {% include "includes/_courses-table-row.html" %}
               {% endif %}

@@ -74,7 +74,7 @@ router.all('/rollover/courses', function (req, res) {
   var data = req.session.data;
   var courses = [];
 
-  data['ucasCourses'].forEach(course => {
+  data['courses'].forEach(course => {
     courses.push({
       name: `${course.name} (${course.programmeCode})`,
       text: course.options[0],
@@ -244,13 +244,13 @@ router.all(['/new/:code/create', '/new/:code/further/create'], function (req, re
   // TODO:
   // If training location added – it'll affect vacancies
 
-  var course = data['ucasCourses'].find(a => a.programmeCode == code);
+  var course = data['courses'].find(a => a.programmeCode == code);
   var editing = true;
   var publishedBefore = false;
 
   if (!course) {
     course = {};
-    data['ucasCourses'].unshift(course);
+    data['courses'].unshift(course);
     editing = false;
   } else if (data[code + '-published-before']) {
     publishedBefore = true;
@@ -524,7 +524,7 @@ router.post('/course/:providerCode/:code/vacancies', function (req, res) {
 router.post('/course/:providerCode/:code/delete', function (req, res) {
   var c = course(req);
   var data = req.session.data;
-  data['ucasCourses'] = data['ucasCourses'].filter(function(c) { return c.programmeCode != req.params.code; });
+  data['courses'] = data['courses'].filter(function(c) { return c.programmeCode != req.params.code; });
   res.redirect('/courses?deleted=true');
 })
 
@@ -567,7 +567,7 @@ router.get('/location/:code', function (req, res) {
   var code = req.params.code;
   var data = req.session.data;
   var school = data['schools'].find(school => school.code == code);
-  var courses = data['ucasCourses'].filter(a => a.schools.find(school => school.code == code));
+  var courses = data['courses'].filter(a => a.schools.find(school => school.code == code));
 
   var isNew = !school;
   res.render('location', {
@@ -622,7 +622,7 @@ router.all('/locations', function (req, res) {
   var data = req.session.data;
   var locations = JSON.parse(JSON.stringify(data['schools']));
 
-  locations.forEach(location => location.courses = data['ucasCourses'].filter(a => a.schools.find(school => school.code == location.code)).length)
+  locations.forEach(location => location.courses = data['courses'].filter(a => a.schools.find(school => school.code == location.code)).length)
 
   res.render('locations', {
     locations: locations,

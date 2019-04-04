@@ -110,7 +110,7 @@ function onboardingWizardPaths(req) {
 function newFurtherEducationCourseWizardPaths(req) {
   var code = req.params.code;
   var data = req.session.data;
-  var editing = data['ucasCourses'].some(a => a.programmeCode == code);
+  var editing = data['courses'].some(a => a.programmeCode == code);
   var summaryView = editing ? 'edit' : 'confirm';
 
   if (req.query.change && req.query.change != 'phase') {
@@ -145,7 +145,7 @@ function newFurtherEducationCourseWizardPaths(req) {
 function newCourseWizardPaths(req) {
   var data = req.session.data;
   var code = req.params.code;
-  var editing = data['ucasCourses'].some(a => a.programmeCode == code);
+  var editing = data['courses'].some(a => a.programmeCode == code);
   var summaryView = editing ? 'edit' : 'confirm';
 
   if (isFurtherEducation(code, data)) {
@@ -410,7 +410,7 @@ function subject(req) {
 }
 
 function course(req) {
-  var course = req.session.data['ucasCourses'].find(function(a) {
+  var course = req.session.data['courses'].find(function(a) {
     return a.programmeCode == req.params.code;
   });
 
