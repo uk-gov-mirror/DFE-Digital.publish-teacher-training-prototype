@@ -25,21 +25,14 @@
     {% if data['next-cycle'] %}<span class="govuk-caption-xl">Next cycle (2020 – 2021)</span>{% endif %}
     {{ title }}
   </h1>
-
+<!--
   <p>Use this section to:</p>
   <ul class="govuk-list govuk-list--bullet">
     <li>preview and publish courses</li>
     <li>write about each course</li>
     <li>copy content between courses</li>
     <li>add new courses</li>
-  </ul>
-
-  {% if data['ucasCourses'].length > 10 %}
-    <div class="add-top-margin">
-      <a href="{{ newCourseFormUrl }}" class="govuk-button" target="_blank">Add a new course</a>
-      <p class="govuk-body-s govuk-!-margin-bottom-6" style="margin-top: -20px">You’ll be taken to a Google Form to fill in your course details.</p>
-    </div>
-  {% endif %}
+  </ul> -->
 
   {% if data['ucasCourses'].length > 0 %}
     {% for accrediting in data['accreditors'] %}
@@ -49,27 +42,93 @@
           {{ accrediting.name }}
         </h3>
       {% endif %}
-      <div class="body-text">
-        <table class="govuk-table ucas-info-table">
-          <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-              <th class="govuk-table__header subject-col" style="width: 380px">Course</th>
-              <th class="govuk-table__header status-col" style="width: 160px">Status</th>
-              <th class="govuk-table__header published-col" style="width: 150px">
-                {% if data['next-cycle'] %}Will it be{% else %}Is it{% endif %} on <abbr title="Find postgraduate teacher training" style="text-decoration: underline; text-decoration-style: dotted;">Find</abbr>?
-              </th>
-              <th class="govuk-table__header applications-col">Applications</th>
-              <th class="govuk-table__header type-col">Vacancies</th>
-            </tr>
-          </thead>
-          <tbody class="govuk-table__body">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-third">
+          <div class="status-box">
+            <h2 class="govuk-heading-m">Filter courses</h2>
+            <ul class="govuk-list">
+              <li><a href="#">All courses ({{ data['ucasCourses'].length }})</a></li>
+            </ul>
+
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-1 govuk-!-margin-bottom-1">Publish status</h3>
+            <ul class="govuk-list govuk-!-margin-bottom-0">
+              <li><a href="#">Published (10)</a></li>
+              <li><a href="#">Draft (10)</a></li>
+              <li><a href="#">New (10)</a></li>
+              <li><a href="#">Archived (10)</a></li>
+            </ul>
+
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-1 govuk-!-margin-bottom-1">Applications</h3>
+            <ul class="govuk-list govuk-!-margin-bottom-0">
+              <li><a href="#">Open (22)</a></li>
+              <li><a href="#">Closed (28)</a></li>
+            </ul>
+
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-1 govuk-!-margin-bottom-1">Accredited body</h3>
+            <ul class="govuk-list govuk-!-margin-bottom-0">
+              <li><a href="#">University of Warwick (22)</a></li>
+              <li><a href="#">University of Cambridge (28)</a></li>
+            </ul>
+
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-1 govuk-!-margin-bottom-1">Location</h3>
+            <ul class="govuk-list govuk-!-margin-bottom-0">
+              <li><a href="#">Main Site (50)</a></li>
+              <li><a href="#">Pool Hayes Primary (2)</a></li>
+              <li><a href="#">Another Academy (8)</a></li>
+            </ul>
+
+            <div class="govuk-!-margin-top-6">
+              <a href="{{ newCourseFormUrl }}" class="govuk-button" target="_blank">Add a new course</a>
+              <p class="govuk-body-s govuk-!-margin-bottom-0" style="margin-top: -20px">You’ll be taken to a Google Form to fill in your course details.</p>
+            </div>
+          </div>
+        </div>
+        <div class="govuk-grid-column-two-thirds">
             {% for course in data['ucasCourses'] %}
               {% if course.accrediting == accrediting.name %}
-                {% include "includes/_courses-table-row.html" %}
+                {% if not readOnlyCourses %}
+                  <a href="/course/{{ data['provider-code'] }}/{{ course.programmeCode }}" class="govuk-heading-m govuk-!-margin-bottom-2">{{ course.name }} ({{ course.programmeCode }})</a>
+                {% else %}
+                  <span  class="govuk-heading-s govuk-!-margin-0">{{ course.name }} ({{ course.programmeCode }})</span>
+                {% endif %}
+
+                {% if course.titleRequested %}
+                  <br /><span class="govuk-body-s">Requested title: {{ course.titleRequested }}</span>
+                {% endif %}
+
+                <div>
+                  {% if data[course.programmeCode + '-publish-state'] == 'draft' %}
+                    <span class="govuk-tag phase-tag-small phase-tag-table phase-tag-draft">Draft</span>
+                  {% elseif data[course.programmeCode + '-publish-state'] == 'published' %}
+                    <span class="govuk-tag phase-tag-small phase-tag-table phase-tag-published">Published</span>
+                  {% elseif data[course.programmeCode + '-publish-state'] == 'published-with-changes' %}
+                    <span class="govuk-tag phase-tag-small phase-tag-table phase-tag-published govuk-!-margin-bottom-1">Published&nbsp;*</span><br />
+                    <span class="govuk-body-s">* Unpublished changes</span>
+                  {% elseif data[course.programmeCode + '-publish-state'] == 'withdrawn' %}
+                    <span class="govuk-tag phase-tag-small phase-tag-table phase-tag-not-running">Withdrawn</span>
+                  {% elseif data[course.programmeCode + '-publish-state'] == 'rolled-over' %}
+                    <span class="govuk-tag phase-tag-small phase-tag-table phase-tag-no-content">Rolled over</span>
+                  {% else %}
+                    <span class="govuk-tag phase-tag-small phase-tag-table phase-tag-no-content">New</span>
+                  {% endif %}
+                </div>
+
+                <dl class="aligned">
+                  <dt>Description</dt>
+                  <dd>{{ course.options }}</dd>
+                  <dt>Is it on Find?</dt>
+                  <dd><a href="#">Yes – view online</a></dd>
+                  <dt>Applications</dt>
+                  <dd>Open</dd>
+                  <dt>Vacancies</dt>
+                  <dd>Yes (<a href="#">Edit</a>)</dd>
+                </dl>
+
+                <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
               {% endif %}
             {% endfor %}
-          </tbody>
-        </table>
+          </div>
+        </div>
       </div>
     {% endfor %}
   {% endif %}

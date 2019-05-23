@@ -1,17 +1,22 @@
 <tr class="govuk-table__row">
   <td class="govuk-table__cell">
     {% if not readOnlyCourses %}
-      <a href="/course/{{ data['provider-code'] }}/{{ course.programmeCode }}" class="govuk-heading-s govuk-!-margin-0">{{ course.name }} ({{ course.programmeCode }})</a>
+      <a href="/course/{{ data['provider-code'] }}/{{ course.programmeCode }}" class="govuk-heading-m govuk-!-margin-1">{{ course.name }} ({{ course.programmeCode }})</a>
     {% else %}
       <span  class="govuk-heading-s govuk-!-margin-0">{{ course.name }} ({{ course.programmeCode }})</span>
     {% endif %}
-    <span class="govuk-body-s">{{ course.options }}</span>
+    <p>{{ course.options }}</p>
 
     {% if course.titleRequested %}
       <br /><span class="govuk-body-s">Requested title: {{ course.titleRequested }}</span>
     {% endif %}
+    <div class="govuk-body">
+      Is it on Find: <a href="#">Yes – view online</a><br />
+      Applications: Open<br />
+      Vacancies: Yes (<a href="#">Edit</a>)
+    </div>
   </td>
-  <td class="govuk-table__cell">
+  <!--<td class="govuk-table__cell">
     {% if data[course.programmeCode + '-publish-state'] == 'draft' %}
       <span class="govuk-tag phase-tag-small phase-tag-table phase-tag-draft">Draft</span>
     {% elseif data[course.programmeCode + '-publish-state'] == 'published' %}
@@ -26,18 +31,18 @@
     {% else %}
       <span class="govuk-tag phase-tag-small phase-tag-table phase-tag-no-content">New</span>
     {% endif %}
-  </td>
+  </td>-->
   <td class="govuk-table__cell no-wrap">
     {% if data[course.programmeCode + '-publish-state'] == 'withdrawn' %}
-      No – withdrawn
+      No
     {% elseif (data[course.programmeCode + '-publish-state'] == 'published' or data[course.programmeCode + '-publish-state'] == 'published-with-changes') %}
       {% if data['next-cycle'] %}
-        Yes – in October
+        Yes
       {% else %}
-        <a href="#">Yes – view online</a>
+        <a href="#">Yes</a>
       {% endif %}
     {% else %}
-      No – still in draft
+      No
     {% endif %}
   </td>
   <td class="govuk-table__cell">
