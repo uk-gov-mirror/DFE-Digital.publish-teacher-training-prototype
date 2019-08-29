@@ -325,6 +325,40 @@ prototype_data['accreditors'] = courses.uniq {|c| c['accrediting'] }.map  do |c|
   }
 end
 
+providers = {}
+data.uniq {|c| c['providerCode'] }.each do |c|
+  providers[c['providerCode']] = {
+    name: c['provider'],
+    code: c['providerCode'],
+    name_and_code: "#{c['provider']} (#{c['providerCode']})",
+    courses: {}
+  }
+end
+
+data.sort_by { |c| "#{c['name']} (#{c['programmeCode']})" }.each do |c|
+  qual = course_qualification(c)
+  partTime = c['campuses'].map {|g| g['partTime'] }.uniq.reject {|r| r == "n/a"}.count > 0
+  fullTime = c['campuses'].map {|g| g['fullTime'] }.uniq.reject {|r| r == "n/a"}.count > 0
+  salaried = c['route'] == "School Direct training programme (salaried)" ? ' with salary' : ''
+
+  if fullTime && partTime
+    description = "#{qual}, full time or part time#{salaried}"
+  elsif partTime
+    description = "#{qual} part time#{salaried}"
+  else
+    description = "#{qual} full time#{salaried}"
+  end
+
+  providers[c['providerCode']][:courses][c['programmeCode']] = {
+    name: c['name'],
+    code: c['programmeCode'],
+    name_and_code: "#{c['name']} (#{c['programmeCode']})",
+    description: description
+  }
+end
+
+prototype_data['p'] = providers.sort_by { |k, v| v[:name_and_code] }.to_h
+
 # Create a list of providers
 prototype_data['providers'] = accredited_courses.uniq {|c| c['provider'] }.map  do |c|
   {
