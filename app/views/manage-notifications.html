@@ -39,32 +39,33 @@ href: "/notifications"
     <h2 class="govuk-heading-m govuk-!-margin-top-6">
       How often should the notifications be sent? 
     </h2>
-    <div class="govuk-radios govuk-!-margin-top-6 govuk-!-margin-bottom-8">
-      <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="frequency-1" name="frequency" type="radio" value="Each time a change is made" {{ checked("frequency", "Each time a change is made") }}>
-        <label class="govuk-label govuk-radios__label" for="frequency-1">
-        Each time a change is made (Recommended)
-        </label>
-      </div>
-      <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="frequency-2" name="frequency" type="radio" value="Daily digest" {{ checked("frequency", "Daily digest") }}>
-        <label class="govuk-label govuk-radios__label" for="frequency-2">
-        Daily digest
-        </label>
-      </div>
-      <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="frequency-3" name="frequency" type="radio" value="Weekly digest" {{ checked("frequency", "Weekly digest") }}>
-        <label class="govuk-label govuk-radios__label" for="frequency-3">
-        Weekly digest
-        </label>
-      </div>
-      <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="frequency-4" name="frequency" type="radio" value="Monthly digest" {{ checked("frequency", "Monthly digest") }}>
-        <label class="govuk-label govuk-radios__label" for="frequency-4">
-        Monthly digest
-        </label>
-      </div>
-    </div>
+    {{ govukRadios({
+      idPrefix: "where-do-you-live",
+      name: "frequency",
+
+      items: [
+        {
+          value: "each-time",
+          checked: checked("frequency", "each-time") or true,
+          text: "Each time a change is made (Recommended)"
+        },
+        {
+          value: "daily",
+          checked: checked("frequency", "daily"),
+          text: "Daily digest"
+        },
+        {
+          value: "weekly",
+          checked: checked("frequency", "weekly"),
+          text: "Weekly"
+        },
+        {
+          value: "monthly",
+          checked: checked("frequency", "monthly"),
+          text: "Monthly"
+        }
+      ]
+    }) }}
     {{ macros.checkboxGroup('agree-to-share', [{ name: 'I give permission to receive emails from Publish teacher training courses' }], false) }}
     <input type="submit" class="govuk-button add-double-bottom-margin" value="Save">
     <p>
