@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block pageTitle %}Invite a user{% endblock %}
+{% set navActive = 'users' %}
 {% block backLink %}{{ macros.backLink('/cycles' if data['rolled-over'] else '/users') }}{% endblock %}
 
 {% block content %}
