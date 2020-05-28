@@ -25,6 +25,8 @@
 {% from "tag/macro.njk"              import govukTag %}
 {% from "textarea/macro.njk"         import govukTextarea %}
 {% from "warning-text/macro.njk"     import govukWarningText %}
+{% from "header/macro.njk"           import govukHeader %}
+
 
 {% import 'macros/macros.njk' as macros  %}
 
@@ -51,7 +53,7 @@
       }
     ]
   }) }} #}
-  {{
+  {# {{
     govukHeader({
       productName: 'Publish teacher training courses',
       'serviceName': productName,
@@ -74,7 +76,28 @@
         }
       ]
     })
-  }}
+  }} #}
+  {{ govukHeader({
+    "navigationClasses": "govuk-header__navigation--end",
+    "productName": "Publish teacher training courses",
+    navigation: [
+        {
+          href: "/notifications",
+          text: "Notifications",
+          active: true if (navActive == 'notifications')
+        },
+        {
+          href: "/users",
+          text: "Users",
+          active: true if (navActive == 'users')
+        },
+        {
+          href: "#",
+          text: "Sign out (Jane Doe)"
+        }
+      ]
+  }) }}
+
 {% endblock %}
 
 {% block beforeContent %}
