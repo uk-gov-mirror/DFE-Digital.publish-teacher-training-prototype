@@ -411,6 +411,11 @@ router.post('/users/invite-user', function (req, res) {
   res.render('users', { showMessage: true })
 })
 
+// notification
+// router.post('/notifications', function (req, res) {
+//   res.render('organisation', { showMessage: true })
+// })
+
 router.get('/about-your-organisation', function (req, res) {
   var errors = validateOrg(req.session.data);
   res.render('about-your-organisation', { errors: errors, justPublished: (req.query.publish && errors.length == 0) })
