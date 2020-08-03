@@ -658,7 +658,7 @@ router.post('/users/manage-courses-1', (req, res) => {
 })
 
 router.post('/users/whose-courses-1', (req, res) => {
-  res.redirect('/users/manage-users-1')
+  res.redirect('/users/next-org')
 })
 
 router.post('/users/manage-users-1', (req, res) => {
